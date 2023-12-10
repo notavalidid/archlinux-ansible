@@ -12,14 +12,39 @@
     - .vimrc
     - .zshrc
 
-- name: Install oh-my-zsh
+- name: Create Alacritty Theme directory
+  become_user: '{{ user.name }}'
+  file:
+    path: '/home/{{ user.name }}/.config/alacritty/themes'
+    state: directory
+    mode: '0755'
+
+- name: Install Alacritty Theme
   become_user: '{{ user.name }}'
   git:
-    repo: https://github.com/ohmyzsh/ohmyzsh.git
-    version: master
-    dest: '/home/{{ user.name }}/.oh-my-zsh'
+    repo: https://github.com/alacritty/alacritty-theme
+    dest: '/home/{{ user.name }}/.config/alacritty/themes'
     remote: readonly
     accept_hostkey: true
+
+- name: Clone oh-my-zsh
+  become_user: '{{ user.name }}'
+  command: 'git clone -c core.autocrlf=input --depth=1 https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh'
+  args:
+    chdir: '~{{ user.name }}'
+    creates: '~{{ user.name }}/.oh-my-zsh'
+
+- name: Set permissions of oh-my-zsh for user
+  become: true
+  file:
+    path: '~{{ user.name }}/.oh-my-zsh'
+    mode: 'go-w'
+
+- name: Set default shell for users
+  become: true
+  user:
+    name: '{{ user.name }}'
+    shell: '/usr/bin/zsh'
 
 - name: Install tmux plugin manager
   become_user: '{{ user.name }}'

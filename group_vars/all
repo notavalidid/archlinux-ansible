@@ -38,11 +38,11 @@ dotfiles:
 ###############################################################################
 
 base_packages:
-    - alacritty
     - alsa-utils
     - aria2
     - atool
     - avahi
+    - bat
     - base-devel
     - bc
     - blueman
@@ -110,6 +110,7 @@ base_packages:
     - zsh
 
 dev_packages:
+    - alacritty
     - android-tools
     - ansible-lint
     - dmidecode

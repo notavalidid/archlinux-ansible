@@ -10,23 +10,21 @@
     - .config
     - .config/alacritty
     - .config/i3
-    - .config/polybar
+    - .config/i3blocks
+    - .config/scripts
 
 - name: Install polybar-themes installer
   become_user: '{{ user.name }}'
   git:
-    repo: https://github.com/danielfm/polybar-themes.git
-    version: fix-rofi
+    repo: 'https://github.com/adi1090x/polybar-themes.git'
     dest: '/home/{{ user.name }}/.polybar-themes'
-    remote: origin
-    accept_hostkey: true
 
 - name: Run polybar-themes installer
   become_user: '{{ user.name }}'
   shell:
     chdir: '/home/{{ user.name }}/.polybar-themes'
     cmd: 'echo "1" | ./setup.sh'
-    creates: '/home/{{ user.name }}/.config/polybar/forest'
+    creates: '/home/{{ user.name }}/.config/polybar/cuts'
 
 - name: Add user .config files
   become_user: '{{ user.name }}'

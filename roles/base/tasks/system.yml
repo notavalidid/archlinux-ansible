@@ -1,0 +1,45 @@
+---
+
+- name: Ensure the correct timezone is set
+  timezone:
+    name: '{{ system.timezone }}'
+
+- name: Ensure the correct locale is set
+  locale_gen:
+    name: '{{ system.locale }}'
+
+- name: Install ntp daemon
+  pacman: 
+    name: ntp
+    state: present
+
+- name: Configure time with Observatorio Astronomico de Lisboa clock
+  copy:
+    src: ntp.conf
+    dest: /etc/
+  notify: restart ntpd
+
+- name: Make sure ntpd is stopped
+  service:
+    name: ntpd
+    state: stopped
+    enabled: true
+
+- name: Sync time with Observatório ntp clock
+  command: ntpdate ntp02.oal.ul.pt
+
+- name: Sync hwclock
+  command: hwclock --systohc
+
+- name: Ensure the desired system services are enabled and started
+  service:
+    name: '{{ item }}'
+    state: started
+    enabled: true
+  loop:
+    - NetworkManager
+    - cronie
+    - ntpd
+    - cronie
+    - cups
+    - bluetooth

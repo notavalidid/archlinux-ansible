@@ -1,0 +1,63 @@
+---
+
+- name: Change default cursor
+  lineinfile:
+    path: /usr/share/icons/default/index.theme
+    regexp: '^Inherits='
+    line: Inherits=Breeze
+
+- name: Switch to lightdm-slick-greeter
+  lineinfile:
+    path: /etc/lightdm/lightdm.conf
+    insertafter: '\[Seat:\*\]'
+    regexp: '^greeter-session='
+    line: greeter-session=lightdm-slick-greeter
+
+- name: Run display setup script
+  lineinfile:
+    path: /etc/lightdm/lightdm.conf
+    insertafter: '\[Seat:\*\]'
+    regexp: '^display-setup-script='
+    line: display-setup-script=/usr/bin/xrandr --auto
+
+- name: Hide the user list in lightdm
+  ansible.builtin.lineinfile:
+    path: /etc/lightdm/lightdm.conf
+    insertafter: '\[Seat:\*\]'
+    regexp: '^greeter-hide-users='
+    line: greeter-hide-users=true
+
+- name: Add lightdm-slick-greeter configuration file
+  ansible.builtin.copy:
+    src: '{{ item }}'
+    dest: '/{{ item }}'
+    owner: root
+    group: root
+    mode: '0644'
+  loop:
+    - etc/lightdm/slick-greeter.conf
+
+- name: Ensure the group autologin exists
+  group:
+    name: autologin
+    state: present
+
+- name: Enable auto-login in lightdm
+  lineinfile:
+    path: /etc/lightdm/lightdm.conf
+    insertafter: '\[Seat:\*\]'
+    regexp: '^autologin-user='
+    line: 'autologin-user={{ user_name }}'
+
+- name: Disable internal speaker beep by default
+  ansible.builtin.copy:
+    content: blacklist pcspkr
+    dest: /etc/modprobe.d/nobeep.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Enable lightdm service
+  service:
+    name: lightdm
+    enabled: yes

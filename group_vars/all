@@ -1,58 +1,226 @@
-##
+###############################################################################
 # User configuration
-# ==================
-##
+###############################################################################
+
 user:
     name: miguel
     group: users
+    uid: 1001
+    gid: 1001
     shell: /bin/zsh
+    create_ssh_keypair: true
 
 homedir: /home/miguel/
 
-##
+###############################################################################
 # System configuration
-# ====================
+###############################################################################
+
 system:
     locale: en_US.UTF-8
     timezone: Europe/Lisbon
     processor: amd
     graphics_card: nvidia
     macspoof: disabled
-##
 
-##
-# Dotfile configuration
-# =====================
-##
+###############################################################################
+# Dotfiles configuration
+###############################################################################
+
 dotfiles:
     installation: "true"
     url: https://github.com/madebymush/dotfiles.git
     destination: .dotfiles
     rcup_flags: -fx README.md
 
+###############################################################################
 # Base package configuration
-# ==========================
-##
+###############################################################################
+
 base_packages:
+    - alacritty
+    - alsa-utils
+    - aria2
+    - atool
+    - avahi
     - base-devel
-    - cronie
-    - openssh
-    - rkhunter
-    - zsh
-    - htop
-    - tree
-    - nmap
-    - wget
-    - man-db
-    - plocate
-    - curl
-    - tmux
-    - git
-    - rsync
-    - coreutils
-    - dateutils
     - bc
+    - blueman
+    - bluez
+    - bluez-utils
+    - bzip2
+    - dateutils
+    - coreutils
+    - cronie
+    - cups
+    - curl
+    - dhcpcd
+    - ethtool
+    - exfat-utils
+    - git
+    - gnupg
+    - gopass
+    - gzip
+    - htop
+    - imagemagick
+    - keepassxc
+    - lib32-pipewire
+    - linux-headers
+    - lsd
+    - lsof
+    - man-db
+    - man-pages
+    - neofetch
+    - neovim
+    - netctl
+    - net-tools
+    - networkmanager
+    - networkmanager-openconnect
+    - networkmanager-openvpn
+    - nmap
+    - openssh
+    - p7zip
+    - pavucontrol
+    - pipewire
+    - pipewire-alsa
+    - pipewire-docs
+    - pipewire-pulse
+    - plocate
+    - rsync
+    - source-highlight
     - strace
-    - lsof	
     - sysstat
+    - tar
+    - thefuck
     - tig
+    - time
+    - tmux
+    - tree
+    - unrar
+    - unzip
+    - vlc
+    - wireplumber
+    - wget
+    - which
+    - whois
+    - wpa_supplicant
+    - xz
+    - zathura
+    - zip
+    - zsh
+
+dev_packages:
+    - android-tools
+    - ansible-lint
+    - dmidecode
+    - dnsmasq
+    - dnsutils
+    - docker-compose
+    - code
+    - go
+    - inetutils
+    - jq
+    - jdk11-openjdk
+    - kubectl
+    - kubectx
+    - leiningen
+    - libusb-compat
+    - maven
+    - net-tools
+    - ngrep
+    - ovmf
+    - openbsd-netcat
+    - opensc
+    - python-pipenv
+    - python-poetry
+    - python-wheel
+    - twine
+    - smartmontools
+    - sops
+    - spotify-launcher
+    - terraform
+    - traceroute
+    - vault
+    - virtualbox-host-dkms
+    - virtualbox-guest-iso
+    - wireshark-qt
+    - yamllint
+    - zsh-autosuggestions
+    - zsh-completions
+    - zsh-theme-powerlevel10k
+
+dev_aur_packages:
+    - aws-cli
+
+looks_packages:
+    - arandr
+    - firefox
+    - dunst
+    - evince
+    - evolution
+    - feh
+    - file-roller
+    - flameshot
+    - gimp
+    - gparted
+    - highlight
+    - hsetroot
+    - btop
+    - i3blocks
+    - i3-gaps
+    - ipp-usb
+    - lightdm-slick-greeter
+    - lxappearance
+    - mediainfo
+    - mesa-demos
+    - mopidy
+    - mousepad
+    - nm-connection-editor
+    - noto-fonts
+    - noto-fonts-cjk
+    - noto-fonts-emoji
+    - noto-fonts-extra
+    - otf-ipafont
+    - papirus-icon-theme
+    - pcmanfm
+    - picom
+    - python-pywal
+    - qt5ct
+    - ranger
+    - rofi
+    - rxvt-unicode
+    - sane
+    - sane-airscan
+    - shotwell
+    - thunar
+    - thunar-archive-plugin
+    - thunar-media-tags-plugin
+    - thunar-volman
+    - tumbler
+    - urxvt-perls
+    - viewnior
+    - w3m
+    - xfce4-power-manager
+    - xorg-apps
+    - xorg-server
+    - xorg-xinit
+    - xournalpp
+    - yubioath-desktop
+
+looks_aur_packages:
+      - cava
+      - librewolf-bin
+      - lightdm-settings
+      - lightdm-slick-greeter
+      - mopidy-mpd
+      - mopidy-mpris
+      - mopidy-spotify
+      - nerd-fonts-terminus
+      - networkmanager-dmenu-git
+      - pm-utils
+      - polybar
+      - timeshift
+      - urxvt-font-size
+      - urxvt-resize-font-git
+      - xcursor-breeze
+

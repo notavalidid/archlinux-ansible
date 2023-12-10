@@ -1,0 +1,45 @@
+---
+
+- name: Ensure config directories exist in $HOME
+  become_user: '{{ user.name }}'
+  file:
+    path: '/home/{{ user.name }}/{{ item }}'
+    mode: '0755'
+    state: directory
+  loop:
+    - .config
+    - .config/alacritty
+    - .config/i3
+    - .config/polybar
+
+- name: Install polybar-themes installer
+  become_user: '{{ user.name }}'
+  git:
+    repo: https://github.com/danielfm/polybar-themes.git
+    version: fix-rofi
+    dest: '/home/{{ user.name }}/.polybar-themes'
+    remote: origin
+    accept_hostkey: true
+
+- name: Run polybar-themes installer
+  become_user: '{{ user.name }}'
+  shell:
+    chdir: '/home/{{ user.name }}/.polybar-themes'
+    cmd: 'echo "1" | ./setup.sh'
+    creates: '/home/{{ user.name }}/.config/polybar/forest'
+
+- name: Add user .config files
+  become_user: '{{ user.name }}'
+  copy:
+    src: '.config'
+    dest: '/home/{{ user.name }}/.config'
+    owner: '{{ user.name }}'
+    group: '{{ user.group }}'
+    mode: '0644'
+
+- name: Add user to autologin group
+  user:
+    name: '{{ user.name }}'
+    groups:
+      - autologin
+    append: true

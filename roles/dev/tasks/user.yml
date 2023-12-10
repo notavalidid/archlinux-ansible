@@ -1,0 +1,31 @@
+---
+
+- name: Add user configuration files
+  become_user: '{{ user.name }}'
+  copy:
+    src: 'home/{{ item }}'
+    dest: '/home/{{ user.name }}/'
+    owner: '{{ user.name }}'
+    mode: '0644'
+  loop:
+    - .tmux.conf
+    - .vimrc
+    - .zshrc
+
+- name: Install oh-my-zsh
+  become_user: '{{ user.name }}'
+  git:
+    repo: https://github.com/ohmyzsh/ohmyzsh.git
+    version: master
+    dest: '/home/{{ user.name }}/.oh-my-zsh'
+    remote: readonly
+    accept_hostkey: true
+
+- name: Install tmux plugin manager
+  become_user: '{{ user.name }}'
+  git:
+    repo: https://github.com/tmux-plugins/tpm
+    version: master
+    dest: '/home/{{ user.name }}/.tmux/plugins/tpm'
+    remote: readonly
+    accept_hostkey: true

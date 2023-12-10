@@ -1,6 +1,0 @@
----
-
-- name: Install editor
-  pacman:
-    name: neovim
-    state: present

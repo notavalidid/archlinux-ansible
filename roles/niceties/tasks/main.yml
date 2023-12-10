@@ -1,4 +1,0 @@
----
-
-- name: Install Zathura reader
-  pacman: name=zathura state=present

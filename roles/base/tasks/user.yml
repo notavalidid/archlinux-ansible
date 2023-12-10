@@ -1,0 +1,51 @@
+---
+
+- name: Ensure {{ user_group }} group exists
+  group:
+    name: '{{ user.group }}'
+    state: present
+    gid: '{{ user.gid }}'
+
+- name: Ensure {{ user_name }} user exists
+  user:
+    name: '{{ user.name }}'
+    groups:
+      - '{{ user.group }}'
+      - audio
+      - lp
+      - network
+      - lock
+      - uucp
+      - power
+      - rfkill
+      - sys
+      - video
+      - wheel
+    append: true
+    group: '{{ user.group }}'
+    shell: '{{ user.shell }}'
+
+- name: Ensure the .ssh directory exists
+  become_user: '{{ user.name }}'
+  file:
+    path: '/home/{{ user.name }}/.ssh'
+    state: directory
+    owner: '{{ user.name }}'
+    group: '{{ user.group }}'
+    mode: '0700'
+
+- name: Ensure the existence of a SSH keypair
+  become_user: '{{ user.name }}'
+  openssh_keypair:
+    path: '/home/{{ user.name }}/.ssh/id_rsa'
+  when:
+    - user.create_ssh_keypair|bool
+
+- name: Ensure the required hidden directories exist
+  become_user: '{{ user.name }}'
+  file:
+    path: '/home/{{ user.name }}/.config'
+    state: directory
+    owner: '{{ user.name }}'
+    group: '{{ user.group }}'
+    mode: '0755'

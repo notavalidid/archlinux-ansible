@@ -1,0 +1,11 @@
+---
+
+- name: Install packages
+  pacman:
+    state: present
+    name: '{{ dev_packages }}'
+
+- name: Install AUR packages
+  pacman:
+    state: present
+    name: '{{ dev_aur_packages }}'

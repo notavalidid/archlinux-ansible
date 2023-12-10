@@ -1,0 +1,9 @@
+---
+
+- name: Install w3m
+  pacman: name=w3m state=present
+  tags: browsers
+
+- name: Install firefox
+  pacman: name=firefox state=present
+  tags: browsers

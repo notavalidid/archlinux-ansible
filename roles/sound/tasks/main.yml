@@ -1,0 +1,13 @@
+---
+
+- name: Install ALSA and PipeWire tools
+  pacman:
+    name:
+      - alsa-utils
+      - pipewire
+      - lib32-pipewire
+      - pipewire-docs
+      - wireplumber
+      - pipewire-alsa
+      - pavucontrol
+    state: present

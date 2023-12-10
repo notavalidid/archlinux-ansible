@@ -1,0 +1,35 @@
+---
+
+- name: Pacman mirrorlist setup
+  copy: src=mirrorlist dest=/etc/pacman.d/
+
+- name: Pacman config setup
+  copy: src=pacman.conf dest=/etc/
+
+- name: Update pacman package cache
+  pacman: update_cache=true
+
+- name: Perform full system upgrade
+  pacman: upgrade=true
+
+- name: Install base packages
+  pacman: name={{ base_packages }} state=present
+
+- name: Clone paru
+  git: repo=https://aur.archlinux.org/paru-bin.git dest="{{ homedir }}/paru" update=true
+  become: false
+
+- name: Build and install paru
+  command: chdir="{{ homedir }}/paru" cmd="makepkg -sfi --noconfirm" creates=/usr/bin/paru
+  become: false
+
+- name: Install microcode updates for intel (if exists)
+  pacman: name=intel-ucode state=present
+  when: system.processor == "intel"
+
+- name: Install microcode updates for amd (if exists)
+  pacman: name=amd-ucode state=present
+  when: system.processor == "amd"
+
+- name: Enable cronie server
+  service: name=cronie state=started enabled=true

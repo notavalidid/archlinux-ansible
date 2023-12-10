@@ -1,0 +1,20 @@
+---
+
+- name: Install ntp daemon
+  pacman: name=ntp state=present
+
+- name: Configure time with Observatorio Astronomico de Lisboa clock
+  copy: src=ntp.conf dest=/etc/
+  notify: restart ntpd
+
+- name: Make sure ntpd is stopped
+  service: name=ntpd state=stopped enabled=true
+
+- name: Sync time with Observatório ntp clock
+  command: ntpdate ntp02.oal.ul.pt
+
+- name: Start ntpd back up
+  service: name=ntpd state=started enabled=true
+
+- name: Sync time to hwclock
+  ansible.builtin.command: hwclock --systohc

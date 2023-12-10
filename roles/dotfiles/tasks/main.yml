@@ -1,0 +1,22 @@
+---
+
+- name: Install rcm
+  command: /usr/bin/paru -S --noconfirm rcm
+  become: false
+
+- name: Clone user dotfiles
+  git:
+    repo: "{{ dotfiles.url }}"
+    dest: /home/{{ user.name }}/{{ dotfiles.destination }}
+    accept_hostkey: true
+    update: true
+    force: true
+  when: dotfiles.installation == "true"
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: Install user dotfiles
+  command: "rcup -d /home/{{ user.name }}/{{ dotfiles.destination }} {{ dotfiles.rcup_flags }}"
+  when: dotfiles.installation == "true"
+  become: true
+  become_user: "{{ user.name }}"

@@ -1,0 +1,17 @@
+---
+
+- name: Install fonts
+  pacman:
+    name:
+      - ttf-dejavu
+      - ttf-liberation
+      - ttf-droid
+      - noto-fonts-emoji
+      - fontconfig
+      - xorg-font-util
+      - ttf-font-awesome
+    state: present
+  register: task_result
+  until: task_result is success
+  retries: 10
+  delay: 2

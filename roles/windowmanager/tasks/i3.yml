@@ -1,0 +1,46 @@
+---
+
+- name: Install i3 windowmanager and components
+  pacman:
+    name:
+      - xorg-server
+      - xorg-xinit
+      - i3-gaps
+      - i3lock
+      - i3status-rust
+      - dmenu
+      - feh
+      - dunst
+      - rofi
+      - picom
+    state: present
+  register: task_result
+  until: task_result is success
+  retries: 10
+  delay: 2
+
+- name: Install i3lock fancy and glitchlock for aur
+  become: false
+  command: '/usr/bin/paru -S --noconfirm {{ item }}'
+  with_items:
+     - i3lock-fancy-git
+     - i3lock-fancy-dualmonitors-git
+     - rofi-power-menu
+
+- name: Create i3wm configuration directory and util subdirectory
+  file:
+    name: /home/{{ user.name }}/.i3/util
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+
+- name: Copy X11 config
+  copy:
+    src: "{{ item }}"
+    dest: /etc/X11/xorg.conf.d&
+    owner: root
+    group: root
+  with_items:
+   - 00-keyboard.conf
+   - 50-mouse-acceleration.conf
+   - 50-mouse-deceleration.conf

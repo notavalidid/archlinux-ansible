@@ -1,0 +1,58 @@
+##
+# User configuration
+# ==================
+##
+user:
+    name: miguel
+    group: users
+    shell: /bin/zsh
+
+homedir: /home/miguel/
+
+##
+# System configuration
+# ====================
+system:
+    locale: en_US.UTF-8
+    timezone: Europe/Lisbon
+    processor: amd
+    graphics_card: nvidia
+    macspoof: disabled
+##
+
+##
+# Dotfile configuration
+# =====================
+##
+dotfiles:
+    installation: "true"
+    url: https://github.com/madebymush/dotfiles.git
+    destination: .dotfiles
+    rcup_flags: -fx README.md
+
+# Base package configuration
+# ==========================
+##
+base_packages:
+    - base-devel
+    - cronie
+    - openssh
+    - rkhunter
+    - zsh
+    - htop
+    - tree
+    - nmap
+    - wget
+    - man-db
+    - plocate
+    - curl
+    - tmux
+    - git
+    - rsync
+    - coreutils
+    - dateutils
+    - bc
+    - strace
+    - lsof	
+    - sysstat
+    - tig

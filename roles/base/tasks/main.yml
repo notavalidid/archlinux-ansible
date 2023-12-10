@@ -1,0 +1,10 @@
+---
+
+- import_tasks: userconfig.yml 
+  name: userconfig
+- import_tasks: base.yml
+  name: base
+- import_tasks: ntp.yml
+  name: ntp
+- import_tasks: locale.yml
+  name: locale

@@ -1,0 +1,22 @@
+---
+
+- name: Install secure arch linux environment
+  hosts: hosts
+  connection: local
+  become: true
+
+  roles:
+    - { role: network, tags: ['network'] }
+    - { role: base, tags: ['base'] }
+    #- { role: firewall, tags: ['firewall'] }
+    - { role: dotfiles, tags: ['dotfiles'] }
+    - { role: shell, tags: ['shell'] }
+    - { role: editor, tags: ['editor'] }
+    - { role: terminal, tags: ['terminal'] }
+    - { role: windowmanager, tags: ['windowmanager'] }
+    - { role: browsers, tags: ['browsers'] }
+    - { role: bluetooth, tags: ['bluetooth'] }
+    - { role: niceties, tags: ['niceties'] } # this can be deleted and just applied in a package somewhere tbh
+    - { role: keepass, tags: ['keepass'] } 
+    - { role: spotify, tags: ['spotify'] }
+    - { role: sound, tags: ['sound'] }
